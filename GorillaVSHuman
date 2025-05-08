@@ -1,0 +1,67 @@
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = Players.LocalPlayer
+local plrGui = player:WaitForChild("PlayerGui")
+
+
+local ScreenGui = Instance.new("ScreenGui", plrGui)
+ScreenGui.Name = "IronHub"
+ScreenGui.ResetOnSpawn = false
+
+local Main = Instance.new("Frame", ScreenGui)
+Main.Size = UDim2.new(0, 250, 0, 150)
+Main.Position = UDim2.new(0.5, -125, 0.5, -75)
+Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Main.BorderSizePixel = 2
+Main.BorderColor3 = Color3.fromRGB(87, 35, 100)
+Main.Name = "Main"
+Main.Active = true -- importante para mover
+Main.Draggable = true -- permite mover com mouse
+Main.Visible = true
+
+local Title = Instance.new("TextLabel", Main)
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Text = "Iron HUB SV0.1"
+Title.TextColor3 = Color3.fromRGB(87, 35, 100)
+Title.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Title.TextScaled = true
+Title.Font = Enum.Font.GothamBold
+Title.Name = "Title"
+
+local Button = Instance.new("TextButton", Main)
+Button.Size = UDim2.new(0.8, 0, 0, 40)
+Button.Position = UDim2.new(0.1, 0, 0.6, 0)
+Button.Text = "Give money (Exploit)"
+Button.TextColor3 = Color3.fromRGB(0, 0, 0)
+Button.BackgroundColor3 = Color3.fromRGB(87, 35, 100)
+Button.Font = Enum.Font.GothamBold
+Button.TextScaled = true
+Button.Name = "ExploitButton"
+
+
+Button.MouseButton1Click:Connect(function()
+    local EconomyService = ReplicatedStorage:WaitForChild("Packages"):WaitForChild("Knit")
+        :WaitForChild("Services"):WaitForChild("EconomyService")
+
+    for i = 1, 8 do
+        pcall(function()
+            EconomyService.RE.ClaimPlaytimeReward:FireServer(i)
+        end)
+        wait(0.2)
+    end
+
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "IronHUB";
+        Text = "Recompensas coletadas! Reiniciando...";
+        Duration = 3;
+    })
+
+    wait(2)
+    TeleportService:Teleport(game.PlaceId, player)
+end)
+
+
+
+
+      
